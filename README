@@ -1,0 +1,8 @@
+Robotic orchestra application.
+
+To run task open console, follow to project directory, and input command.
+
+Commands:
+'gradlew clean' - remove all built previously files
+'gradlew build' - build project
+'gradlew run' - deploy application. Open browser on URL 'http://localhost:8080/robotworld'
