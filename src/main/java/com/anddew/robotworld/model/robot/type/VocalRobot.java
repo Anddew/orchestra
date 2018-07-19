@@ -5,6 +5,11 @@ import com.anddew.robotworld.model.robot.AbstractRobot;
 import com.anddew.robotworld.model.robot.RobotType;
 
 
+/**
+ * Singer type of robot. Interpret song as a vocalist.
+ *
+ * @author Anddew
+ */
 public class VocalRobot extends AbstractRobot {
 
     private static final long serialVersionUID = -1610283979567241506L;
@@ -14,7 +19,11 @@ public class VocalRobot extends AbstractRobot {
     private static final String WORD_SEPARATOR = " ";
     private static final int MILLIS_IN_SECOND = 1000;
 
-
+    /**
+     * Constructor. Creates an instance of {@link RobotType#VOCAL} robot.
+     *
+     * @param name specified robot name
+     */
     public VocalRobot(String name) {
         super(name, RobotType.VOCAL);
     }
