@@ -10,6 +10,8 @@ public class Song {
     private int duration;
     private String text;
 
+    public Song() {
+    }
 
     public Song(String artist, String title, int duration, String text) {
         this.artist = artist;
@@ -23,16 +25,32 @@ public class Song {
         return artist;
     }
 
+    public void setArtist(String artist) {
+        this.artist = artist;
+    }
+
     public String getTitle() {
         return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public int getDuration() {
         return duration;
     }
 
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
+
     public String getText() {
         return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
     }
 
     @Override
@@ -53,12 +71,7 @@ public class Song {
 
     @Override
     public String toString() {
-        return "Song{" +
-                "artist='" + artist + '\'' +
-                ", title='" + title + '\'' +
-                ", duration=" + duration +
-                ", text='" + text + '\'' +
-                '}';
+        return artist + ":" + title;
     }
 
 }

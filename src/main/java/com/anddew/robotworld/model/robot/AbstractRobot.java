@@ -1,6 +1,7 @@
 package com.anddew.robotworld.model.robot;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 
 public abstract class AbstractRobot implements Robot, Serializable {
@@ -25,4 +26,27 @@ public abstract class AbstractRobot implements Robot, Serializable {
         return type;
     }
 
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (this.getClass() != o.getClass()) {
+            return false;
+        }
+        AbstractRobot that = (AbstractRobot) o;
+        return Objects.equals(name, that.name) &&
+            type == that.type;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, type);
+    }
+
+    @Override
+    public String toString() {
+        return name + " : " + type;
+    }
 }

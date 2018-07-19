@@ -49,4 +49,12 @@ public class Repertoire {
         return repertoire.get(title);
     }
 
+    public void addSong(Song song) {
+        repertoire.put(song.getTitle(), song);
+    }
+
+    public Set<String> getTitles() {
+        return repertoire.keySet();
+    }
+
 }
