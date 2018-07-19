@@ -8,7 +8,6 @@
 <body>
     This is orchestra page!
     <div class="jsLog">
-        this must be removed
     </div>
 </body>
 </html>

@@ -12,7 +12,7 @@ $(document).ready(function () {
 
     function getUpdates() {
         $.ajax({
-            url: 'orchestra/update',
+            url: 'log/update',
             type: 'GET',
             contentType: "application/json",
             success: function (elements) {
