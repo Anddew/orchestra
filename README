@@ -1,8 +1,24 @@
 Robotic orchestra application.
 
-To run task open console, follow to project directory, and input command.
+Windows: execute file ../bin/run.bat
 
-Commands:
-'gradlew clean' - remove all built previously files
+Any operation system:
+To run task open command console, follow to project directory, and input command:
+'gradlew clean' - remove old files previously built
 'gradlew build' - build project
 'gradlew run' - deploy application. Open browser on URL 'http://localhost:8080/robotworld'
+
+
+
+REST API:
+GET "/" - render main page
+GET "/update" - update history
+
+GET "/song" - update available songs list
+POST "/song" (params = artist, title, duration, text) - create new song
+
+GET "/robot/free" - update free robots list
+POST "/robot/register" (params = name, type) - create new robot
+POST "/robot/remove" (params = name) - release robot
+POST "/robot/play" (params = name, title) - submit task to play song with appropriate title by robot with appropriate name
+POST "/robot/broadcast" - submit task to play song with appropriate title for all free robots

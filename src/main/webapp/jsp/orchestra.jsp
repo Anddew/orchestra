@@ -9,7 +9,7 @@
     <div>
         <div>
             <h2>
-                Register or release robot...
+                Register or remove robot...
             </h2>
         </div>
         <input class="jsRobotName" type="text" placeholder="Robot name..."/>
