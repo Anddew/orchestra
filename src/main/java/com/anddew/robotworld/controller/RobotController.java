@@ -1,9 +1,14 @@
 package com.anddew.robotworld.controller;
 
+import java.util.Collection;
 import java.util.Map;
+import java.util.concurrent.BrokenBarrierException;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.CyclicBarrier;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.task.TaskExecutor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -46,6 +51,16 @@ public class RobotController {
 
 
     /**
+     * Update free robots collection.
+     *
+     * @return collection of free robots
+     */
+    @GetMapping("/free")
+    public Collection<Robot> getFreeRobots() {
+        return orchestra.getAll();
+    }
+
+    /**
      * Register new robot.
      *
      * @param parameters request parameters with robot data
@@ -73,13 +88,13 @@ public class RobotController {
     }
 
     /**
-     * Release robot.
+     * Remove robot.
      *
-     * @param parameters request parameters with robot name to release
-     * @return {@link HttpStatus#OK} if releasing successful
-     *          or {@link HttpStatus#BAD_REQUEST} if attempt to release robot was failed
+     * @param parameters request parameters with robot name to remove
+     * @return {@link HttpStatus#OK} if removing successful
+     *          or {@link HttpStatus#BAD_REQUEST} if attempt to remove robot was failed
      */
-    @PostMapping("/release")
+    @PostMapping("/remove")
     public ResponseEntity<String> removeRobot(@RequestBody Map<String, String> parameters) {
         try {
             String name = parameters.get(ROBOT_NAME_PARAMETER);
@@ -102,11 +117,13 @@ public class RobotController {
      */
     @PostMapping("/play")
     public ResponseEntity<String> play(@RequestBody Map<String, String> parameters) {
+        Song song = null;
+        Robot robot = null;
         try {
-            String name = parameters.get(ROBOT_NAME_PARAMETER);
-            Robot robot = orchestra.get(name);
             String title = parameters.get(SONG_TITLE_PARAMETER);
-            Song song = repertoire.getSong(title);
+            song = repertoire.getSong(title);
+            String name = parameters.get(ROBOT_NAME_PARAMETER);
+            robot = orchestra.retrieve(name);
 
             historyHolder.add("New task - '" + name + "' plays '" + song + "'.");
             String musicalPart = robot.play(song);
@@ -115,6 +132,38 @@ public class RobotController {
         } catch (RuntimeException e) {
             LOGGER.error("Error during robot playing.", e);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        } finally {
+            if (robot != null) {
+                orchestra.release(robot);
+            }
+        }
+    }
+
+    /**
+     * Assign task to all free robots.
+     *
+     * @param parameters song title to play
+     */
+    @PostMapping("/broadcast")
+    public void broadcast(@RequestBody Map<String, String> parameters) {
+        Song song = repertoire.getSong(parameters.get(SONG_TITLE_PARAMETER));
+        Collection<Robot> freeRobots = orchestra.retrieveAll();
+
+        for(Robot robot : freeRobots) {
+            new Thread(()->{
+                try {
+                    historyHolder.add("New task - '" + robot.getName() + "' plays '" + song + "'.");
+                    String musicalPart = robot.play(song);
+                    historyHolder.add("Robot '" + robot + "': '" + musicalPart + "'.");
+                } catch (RuntimeException e) {
+                    LOGGER.error("Error during robot playing.", e);
+
+                } finally {
+                    if (robot != null) {
+                        orchestra.release(robot);
+                    }
+                }
+            }).start();
         }
     }
 

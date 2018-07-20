@@ -24,9 +24,14 @@
             Register
         </button>
         <div>
-            <button type="submit" class="jsReleaseButton">
-                Release
+            <button type="submit" class="jsRemoveButton">
+                Remove
             </button>
+        </div>
+        <div>
+            Free robots:
+            <span class="jsFreeRobotList">
+            </span>
         </div>
     </div>
 
@@ -37,16 +42,18 @@
             </h2>
         </div>
         <input class="jsSongTitle" type="text" placeholder="Songs title..."/>
-        <button class="jsShowSongsButton" type="submit">
-            Show songs
-        </button>
-        <span class="jsSongsList">
-            songs list
-        </span>
         <div>
             <button type="submit" class="jsPlaySongButton">
                 Play song
             </button>
+            <button type="submit" class="jsBroadcastButton">
+                Broadcast
+            </button>
+        </div>
+        <div>
+            Available songs:
+            <span class="jsSongsList">
+            </span>
         </div>
     </div>
 

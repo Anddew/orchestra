@@ -5,6 +5,9 @@ import com.anddew.robotworld.model.robot.Robot;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -23,7 +26,16 @@ public class RoboticOrchestra {
 
 
     /**
-     * Register new robot in orchesta.
+     * Find all free robots.
+     *
+     * @return collection of free robots
+     */
+    public Collection<Robot> getAll() {
+        return freeRobots.values();
+    }
+
+    /**
+     * Register new robot in orchestra.
      *
      * @param robot to be registered
      * @throws RuntimeException if robot with such name is already exist
@@ -37,19 +49,58 @@ public class RoboticOrchestra {
     }
 
     /**
-     * Find free robot by name.
+     * Retrieve free robot by name.
      *
      * @param name of requested robot
      * @return robot with specified name
      * @throws RuntimeException if no free robot with specified name was found
      */
-    public synchronized Robot get(String name) {
+    public synchronized Robot retrieve(String name) {
         Robot robot = freeRobots.get(name);
         if (robot == null) {
             throw new RuntimeException("Robot with name '" + name + "' is busy or not exist.");
         }
         busyRobots.put(robot.getName(), robot);
         return robot;
+    }
+
+    /**
+     * Retrieve all free robots.
+     *
+     * @return collection {@link List} of free robots or empty one if no robots available
+     */
+    public synchronized List<Robot> retrieveAll() {
+        List<Robot> result = new ArrayList<>(freeRobots.values());
+        busyRobots.putAll(freeRobots);
+        freeRobots.clear();
+        return result;
+    }
+
+    /**
+     * Release busy robot and make it available.
+     *
+     * @param robot to release
+     */
+    public synchronized void release(Robot robot) {
+        Robot releasedRobot = busyRobots.remove(robot.getName());
+        if (releasedRobot == null) {
+            throw new RuntimeException("Attempt to release robot failed. No such busy robot - '" + robot + "'.");
+        }
+        freeRobots.put(robot.getName(), robot);
+    }
+
+    /**
+     * Release collection of busy robots and make it available.
+     *
+     * @param robots to release
+     */
+    public synchronized void releaseAll(Collection<Robot> robots) {
+        for (Robot robot : robots) {
+            Robot removedRobot = busyRobots.remove(robot.getName());
+            if (removedRobot != null) {
+                freeRobots.put(removedRobot.getName(), removedRobot);
+            }
+        }
     }
 
     /**

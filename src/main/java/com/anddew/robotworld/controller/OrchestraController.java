@@ -17,7 +17,7 @@ import com.anddew.robotworld.history.HistoryHolder;
  * @author Anddew
  */
 @Controller
-@RequestMapping("/orchestra")
+@RequestMapping("/")
 public class OrchestraController {
 
     @Autowired

@@ -93,12 +93,4 @@ public class Repertoire {
         return repertoire.keySet();
     }
 
-    public void addSong(Song song) {
-        repertoire.put(song.getTitle(), song);
-    }
-
-    public Set<String> getTitles() {
-        return repertoire.keySet();
-    }
-
 }
