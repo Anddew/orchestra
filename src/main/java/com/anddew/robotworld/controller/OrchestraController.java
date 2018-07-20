@@ -5,25 +5,42 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.anddew.robotworld.log.LogManager;
+import com.anddew.robotworld.history.HistoryHolder;
 
 
+/**
+ * Main page controller.
+ *
+ * @author Anddew
+ */
 @Controller
+@RequestMapping("/orchestra")
 public class OrchestraController {
 
     @Autowired
-    private LogManager logManager;
+    private HistoryHolder historyHolder;
 
-    @GetMapping("/orchestra")
+    /**
+     * Render main page.
+     *
+     * @return main page name
+     */
+    @GetMapping
     public String getPage() {
         return "orchestra";
     }
 
-    @GetMapping("/orchestra/update")
+    /**
+     * Updates main page data.
+     *
+     * @return history collection
+     */
+    @GetMapping("/update")
     public @ResponseBody Collection<String> getUpdates() {
-        return logManager.getLog();
+        return historyHolder.getHistory();
     }
 
 }

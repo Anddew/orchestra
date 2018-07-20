@@ -4,6 +4,11 @@ import java.io.Serializable;
 import java.util.Objects;
 
 
+/**
+ * Basic implementation of robot entity.
+ *
+ * @author Anddew
+ */
 public abstract class AbstractRobot implements Robot, Serializable {
 
     private static final long serialVersionUID = -167408714671107801L;

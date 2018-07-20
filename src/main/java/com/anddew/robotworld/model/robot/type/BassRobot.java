@@ -4,6 +4,11 @@ import com.anddew.robotworld.model.Song;
 import com.anddew.robotworld.model.robot.AbstractRobot;
 import com.anddew.robotworld.model.robot.RobotType;
 
+/**
+ * Bass type of robot. Interpret song as a bass player.
+ *
+ * @author Anddew
+ */
 public class BassRobot extends AbstractRobot {
 
     private static final long serialVersionUID = 6492987543565442606L;
@@ -11,7 +16,11 @@ public class BassRobot extends AbstractRobot {
     private static final String WORD_SEPARATOR = " ";
     private static final int MILLIS_IN_SECOND = 1000;
 
-
+    /**
+     * Constructor. Creates an instance of {@link RobotType#BASS} robot.
+     *
+     * @param name specified robot name
+     */
     public BassRobot(String name) {
         super(name, RobotType.BASS);
     }

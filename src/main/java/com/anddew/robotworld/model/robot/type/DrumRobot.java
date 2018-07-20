@@ -4,12 +4,23 @@ import com.anddew.robotworld.model.Song;
 import com.anddew.robotworld.model.robot.AbstractRobot;
 import com.anddew.robotworld.model.robot.RobotType;
 
+
+/**
+ * Drum type of robot. Interpret song as a drummer.
+ *
+ * @author Anddew
+ */
 public class DrumRobot extends AbstractRobot {
 
     private static final long serialVersionUID = -8164153677383680655L;
 
     private static final int MILLIS_IN_SECOND = 1000;
 
+    /**
+     * Constructor. Creates an instance of {@link RobotType#DRUMS} robot.
+     *
+     * @param name specified robot name
+     */
     public DrumRobot(String name) {
         super(name, RobotType.DRUMS);
     }

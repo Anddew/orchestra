@@ -18,7 +18,7 @@
 
     <context:component-scan base-package="com.anddew.robotworld.controller" />
     <context:component-scan base-package="com.anddew.robotworld.model" />
-    <context:component-scan base-package="com.anddew.robotworld.log" />
+    <context:component-scan base-package="com.anddew.robotworld.history" />
 
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/jsp/"/>

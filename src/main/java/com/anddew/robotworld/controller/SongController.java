@@ -3,35 +3,47 @@ package com.anddew.robotworld.controller;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.anddew.robotworld.log.LogManager;
+import com.anddew.robotworld.history.HistoryHolder;
 import com.anddew.robotworld.model.Repertoire;
 import com.anddew.robotworld.model.Song;
 
 
-@RestController("/song")
+/**
+ * Song requests REST-controller.
+ *
+ * @author Anddew
+ */
+@RestController
+@RequestMapping("/song")
 public class SongController {
 
     @Autowired
-    private LogManager logManager;
+    private HistoryHolder historyHolder;
 
     @Autowired
     private Repertoire repertoire;
 
+    /**
+     * Find all available song titles.
+     *
+     * @return collection {@link Set} of available song titles.
+     */
     @GetMapping
-    public Set<String> getSongTitles() {
-        return repertoire.getTitles();
+    public Set<String> getSongs() {
+        return repertoire.getSongs();
     }
 
+    /**
+     * Creates a new song.
+     *
+     * @param song to create
+     */
     @PostMapping
     public void createSong(@RequestBody Song song) {
-        System.out.println(song);
         repertoire.addSong(song);
-        logManager.add("New song: " + song);
+        historyHolder.add("New song: " + song);
     }
 
 }

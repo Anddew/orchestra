@@ -3,6 +3,11 @@ package com.anddew.robotworld.model;
 import java.util.Objects;
 
 
+/**
+ * Song entity.
+ *
+ * @author Anddew
+ */
 public class Song {
 
     private String artist;
@@ -10,9 +15,21 @@ public class Song {
     private int duration;
     private String text;
 
+    /**
+     * Constructor.
+     * Creates an empty bean of song.
+     */
     public Song() {
     }
 
+    /**
+     * Constructor. Creates a song object.
+     *
+     * @param artist name of artist
+     * @param title title of song
+     * @param duration duration in seconds
+     * @param text text of song
+     */
     public Song(String artist, String title, int duration, String text) {
         this.artist = artist;
         this.title = title;

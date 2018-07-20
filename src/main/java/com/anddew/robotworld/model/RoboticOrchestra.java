@@ -8,7 +8,12 @@ import org.springframework.stereotype.Component;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-@Component
+/**
+ * Representation of orchestra.
+ *
+ * @author Anddew
+ */
+@Component("orchestra")
 public class RoboticOrchestra {
 
     private final static Logger LOGGER = Logger.getLogger(RoboticOrchestra.class);
@@ -17,6 +22,12 @@ public class RoboticOrchestra {
     private Map<String, Robot> busyRobots = new ConcurrentHashMap<>();
 
 
+    /**
+     * Register new robot in orchesta.
+     *
+     * @param robot to be registered
+     * @throws RuntimeException if robot with such name is already exist
+     */
     public synchronized void register(Robot robot) {
         if (freeRobots.containsKey(robot.getName()) || busyRobots.containsKey(robot.getName())) {
             throw new RuntimeException("Robot with name '" + robot.getName() + "' is already exist.");
@@ -25,6 +36,13 @@ public class RoboticOrchestra {
         LOGGER.info("Successful registration. [" + robot + "]");
     }
 
+    /**
+     * Find free robot by name.
+     *
+     * @param name of requested robot
+     * @return robot with specified name
+     * @throws RuntimeException if no free robot with specified name was found
+     */
     public synchronized Robot get(String name) {
         Robot robot = freeRobots.get(name);
         if (robot == null) {
@@ -34,6 +52,12 @@ public class RoboticOrchestra {
         return robot;
     }
 
+    /**
+     * Removing robot with specified name from orchestra.
+     *
+     * @param name of robot to be removed
+     * @throws RuntimeException if robot with specified name was found
+     */
     public synchronized void remove(String name) {
         if (freeRobots.containsKey(name)) {
             freeRobots.remove(name);

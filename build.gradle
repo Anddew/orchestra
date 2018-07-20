@@ -1,3 +1,8 @@
+plugins {
+    id "com.bmuschko.tomcat" version "2.4.1"
+}
+
+
 group 'robot-world'
 version '1.0-SNAPSHOT'
 
@@ -18,4 +23,36 @@ dependencies {
     compile "org.aspectj:aspectjrt:1.7.3"
     compile "log4j:log4j:1.2.17"
     testCompile "junit:junit:4.12"
+    testCompile "org.mockito:mockito-all:1.10.19"
+
+    def tomcatVersion = '8.0.50'
+    tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
+            "org.apache.tomcat.embed:tomcat-embed-logging-juli:${tomcatVersion}",
+            "org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}"
+
 }
+
+//sourceSets {
+//    main {
+//        resources {
+//            srcDir 'src/main/resources'
+//            srcDir 'src/main/java'
+//        }
+//    }
+//    test {
+//        resources {
+//            srcDir 'src/test/resources'
+//            srcDir 'src/test/java'
+//        }
+//    }
+//}
+
+tomcatRun.contextPath = '/robotworld'
+
+tomcatRun {
+    webDefaultXml = file("src/main/webapp/WEB-INF/web.xml")
+}
+
+task run(dependsOn: 'tomcatRun')
+
+task stop(dependsOn: 'tomcatStop')

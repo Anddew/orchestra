@@ -1,7 +1,7 @@
 $(document).ready(function () {
 
     var ELEMENTS = {
-        LOG: '.jsLog',
+        HISTORY: '.jsHistory',
         ROBOT_NAME: '.jsRobotName',
         ROBOT_TYPE: '.jsRobotType',
         REGISTER_BUTTON: '.jsRegisterButton',
@@ -18,7 +18,7 @@ $(document).ready(function () {
     };
 
     var
-        $log = $(ELEMENTS.LOG),
+        $history = $(ELEMENTS.HISTORY),
         $robotName = $(ELEMENTS.ROBOT_NAME),
         $robotType = $(ELEMENTS.ROBOT_TYPE),
         $registerButton = $(ELEMENTS.REGISTER_BUTTON),
@@ -41,18 +41,20 @@ $(document).ready(function () {
             url: 'orchestra/update',
             type: 'GET',
             contentType: "application/json",
-            success: function (elements) {
-                $log.empty();
-                for(var i = (Object.keys(elements).length - 1); i >= 0 ; i--){
-                    $log.append($("<div></div>").text(elements[i]));
-                }
+            statusCode: {
+              200: function (elements) {
+                  $history.empty();
+                  for(var i = (Object.keys(elements).length - 1); i >= 0 ; i--){
+                      $history.append($("<div></div>").text(elements[i]));
+                  }
+              }
             }
         });
     }
 
     $registerButton.on("click", function () {
         $.ajax({
-            url: 'register',
+            url: 'robot/register',
             type: 'POST',
             contentType: "application/json",
             data: JSON.stringify({
@@ -60,8 +62,6 @@ $(document).ready(function () {
                 type: $robotType.val()
             }),
             statusCode: {
-                200: function () {
-                },
                 400: function () {
                     alert("Error!")
                 }
@@ -71,15 +71,13 @@ $(document).ready(function () {
 
     $releaseButton.on("click", function () {
         $.ajax({
-            url: 'release',
+            url: 'robot/release',
             type: 'POST',
             contentType: "application/json",
             data: JSON.stringify({
                 name: $robotName.val()
             }),
             statusCode: {
-                200: function () {
-                },
                 400: function () {
                     alert("Error!")
                 }
@@ -89,7 +87,7 @@ $(document).ready(function () {
 
     $playSongButton.on("click", function () {
         $.ajax({
-            url: 'play',
+            url: 'robot/play',
             type: 'POST',
             contentType: "application/json",
             data: JSON.stringify({
@@ -97,8 +95,6 @@ $(document).ready(function () {
                 title: $songTitle.val()
             }),
             statusCode: {
-                200: function () {
-                },
                 400: function () {
                     alert("Error!")
                 }
@@ -137,8 +133,6 @@ $(document).ready(function () {
                 text: $newSongText.val()
             }),
             statusCode: {
-                200: function (songs) {
-                },
                 400: function () {
                     alert("Error!")
                 }
