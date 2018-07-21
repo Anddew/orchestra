@@ -1,4 +1,4 @@
-package com.anddew.robotworld.model;
+package com.anddew.robotworld;
 
 import com.anddew.robotworld.model.robot.Robot;
 
@@ -16,10 +16,10 @@ import java.util.concurrent.ConcurrentHashMap;
  *
  * @author Anddew
  */
-@Component("orchestra")
-public class RoboticOrchestra {
+@Component
+public class Orchestra {
 
-    private final static Logger LOGGER = Logger.getLogger(RoboticOrchestra.class);
+    private final static Logger LOGGER = Logger.getLogger(Orchestra.class);
 
     private Map<String, Robot> freeRobots = new ConcurrentHashMap<>();
     private Map<String, Robot> busyRobots = new ConcurrentHashMap<>();

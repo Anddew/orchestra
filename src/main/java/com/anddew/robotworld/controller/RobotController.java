@@ -2,20 +2,16 @@ package com.anddew.robotworld.controller;
 
 import java.util.Collection;
 import java.util.Map;
-import java.util.concurrent.BrokenBarrierException;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.CyclicBarrier;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.task.TaskExecutor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.anddew.robotworld.history.HistoryHolder;
-import com.anddew.robotworld.model.Repertoire;
-import com.anddew.robotworld.model.RoboticOrchestra;
+import com.anddew.robotworld.Repertoire;
+import com.anddew.robotworld.Orchestra;
 import com.anddew.robotworld.model.Song;
 import com.anddew.robotworld.model.robot.Robot;
 import com.anddew.robotworld.model.robot.RobotFactory;
@@ -38,7 +34,7 @@ public class RobotController {
     private static final String SONG_TITLE_PARAMETER = "title";
 
     @Autowired
-    private RoboticOrchestra orchestra;
+    private Orchestra orchestra;
 
     @Autowired
     private Repertoire repertoire;

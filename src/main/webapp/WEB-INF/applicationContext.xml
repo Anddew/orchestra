@@ -16,9 +16,7 @@
     <mvc:annotation-driven />
     <aop:aspectj-autoproxy />
 
-    <context:component-scan base-package="com.anddew.robotworld.controller" />
-    <context:component-scan base-package="com.anddew.robotworld.model" />
-    <context:component-scan base-package="com.anddew.robotworld.history" />
+    <context:component-scan base-package="com.anddew.robotworld" />
 
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/jsp/"/>
@@ -26,7 +24,5 @@
     </bean>
 
     <mvc:resources mapping="/resources/**" location="/resources/"/>
-
-    <bean name="orchestra" class="com.anddew.robotworld.model.RoboticOrchestra"/>
 
 </beans>

@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.anddew.robotworld.history.HistoryHolder;
-import com.anddew.robotworld.model.Repertoire;
+import com.anddew.robotworld.Repertoire;
 import com.anddew.robotworld.model.Song;
 
 
@@ -44,7 +44,13 @@ public class SongController {
      */
     @PostMapping
     public ResponseEntity<String> createSong(@RequestBody Song song) {
-        if (song.getArtist().isEmpty() || song.getTitle().isEmpty() || song.getDuration() == 0 || song.getText().isEmpty()) {
+        if (song.getArtist() == null ||
+                song.getArtist().isEmpty() ||
+                song.getTitle() == null ||
+                song.getTitle().isEmpty() ||
+                song.getDuration() == 0 ||
+                song.getText().isEmpty()) {
+
             return ResponseEntity.status(400).body("All fields in object Song are required.");
         }
 

@@ -1,5 +1,6 @@
-package com.anddew.robotworld.model;
+package com.anddew.robotworld;
 
+import com.anddew.robotworld.model.Song;
 import org.apache.log4j.Logger;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
