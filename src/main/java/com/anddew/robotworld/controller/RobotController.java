@@ -2,6 +2,7 @@ package com.anddew.robotworld.controller;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.concurrent.CountDownLatch;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -141,25 +142,28 @@ public class RobotController {
      * @param parameters song title to play
      */
     @PostMapping("/broadcast")
-    public void broadcast(@RequestBody Map<String, String> parameters) {
+    public void broadcast(@RequestBody Map<String, String> parameters) throws InterruptedException {
         Song song = repertoire.getSong(parameters.get(SONG_TITLE_PARAMETER));
         Collection<Robot> freeRobots = orchestra.retrieveAll();
 
+        CountDownLatch countDownLatch = new CountDownLatch(freeRobots.size());
         for(Robot robot : freeRobots) {
+            Thread.sleep(3000);
             new Thread(()->{
                 try {
+                    countDownLatch.await();
                     historyHolder.add("New task - '" + robot.getName() + "' plays '" + song + "'.");
                     String musicalPart = robot.play(song);
                     historyHolder.add("Robot '" + robot + "': '" + musicalPart + "'.");
-                } catch (RuntimeException e) {
+                } catch (RuntimeException | InterruptedException e) {
                     LOGGER.error("Error during robot playing.", e);
-
                 } finally {
                     if (robot != null) {
                         orchestra.release(robot);
                     }
                 }
             }).start();
+            countDownLatch.countDown();
         }
     }
 
