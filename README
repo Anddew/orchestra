@@ -21,4 +21,4 @@ GET "/robot/free" - update free robots list
 POST "/robot/register" (params = name, type) - create new robot
 POST "/robot/remove" (params = name) - kill robot
 POST "/robot/play" (params = name, title) - submit task to play song with appropriate title by robot with appropriate name
-POST "/robot/broadcast" - submit task to play song with appropriate title for all free robots
+POST "/robot/broadcast" (params = title) - submit task to play song with appropriate title for all free robots
